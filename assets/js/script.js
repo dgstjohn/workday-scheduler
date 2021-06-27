@@ -10,6 +10,7 @@ $(displayDay.text(currentDay));
 var container = $(".container");
 
 // for loop to create dynamic rows 
+// index starts at 9 to match row id to time 
 for (let i = 9; i < 18; i++) {
     // create div for whole row with class of "row" (from stylesheet) and id pegged to index
     // could not find a JQuery equivalent for document.createElement -- add() didn't seem to do it
@@ -19,26 +20,26 @@ for (let i = 9; i < 18; i++) {
     // create divs to go inside row with Bootstrap and other classes
     // div for time display column at left
     var timeColumn = document.createElement("div");
-    $(timeColumn).attr("class","col-sm-1 hour");
+    $(timeColumn).attr("class", "col-sm-1 hour");
     // div for text input area for tasks
     var taskColumn = document.createElement("div");
-    $(taskColumn).attr("class","col-sm-10");
+    $(taskColumn).attr("class", "col-sm-10");
     // add textarea element inside taskColumn
     var taskColTextarea = document.createElement("textarea");
-    $(taskColTextarea).attr("class","form-control h-100");
-    $(taskColTextarea).attr("id","textarea");
+    $(taskColTextarea).attr("class", "form-control h-100");
+    $(taskColTextarea).attr("id", "textarea");
     $(taskColumn).append(taskColTextarea);
     // div for save button column at right
     var saveColumn = document.createElement("div");
-    $(saveColumn).attr("class","col-sm-1");
+    $(saveColumn).attr("class", "col-sm-1");
     // add button inside saveColumn
     var saveBtn = document.createElement("button");
-    $(saveBtn).attr("class","saveBtn h-100 w-100");
-    $(saveBtn).attr("id","saveBtn");
+    $(saveBtn).attr("class", "saveBtn h-100 w-100");
+    $(saveBtn).attr("id", "saveBtn");
     $(saveColumn).append(saveBtn);
     // stick Font Awesome save icon inside button
     var saveIcon = document.createElement("i");
-    $(saveIcon).attr("class","far fa-save")
+    $(saveIcon).attr("class", "far fa-save")
     $(saveBtn).append(saveIcon)
     // append row to container
     $(container).append(rowDiv);
@@ -46,39 +47,72 @@ for (let i = 9; i < 18; i++) {
     $(rowDiv).append(timeColumn);
     $(rowDiv).append(taskColumn);
     $(rowDiv).append(saveColumn);
+    // variable to set text for time display
+    if (i < 13) {
+        var timeDisplay = i + " am";
+    }
+    // subtract 12 from the index to display pm time correctly
+    else {
+        var timeDisplay = (i - 12) + " pm";
+    }
+    // JQuery text method to display time
+    $(timeColumn).text(timeDisplay);
 }
 
-// var hours = ["9 am", "10 am", "11 am", "12 pm", "1 pm", "2 pm", "3 pm", "4 pm", "5 pm"];
+// do for loop to check the rows and assign a color class
+// once again, index is 9 to 18
+for (i = 9; i < 18; i++) {
+    // set variable to get Moment time for color assignment to task row
+    // using Moment hour method from https://momentjs.com/docs/#/get-set/hour/
+    var currentTime = moment().hour();
+    console.log(currentTime);
+    // grab the row id into a variable
+    var rowId = document.getElementById(rowDiv);
+    console.log(rowId);
+    // compare the row id with the current time and set the corresponding color (defined in stylesheet)
+    if (rowId < currentTime) {
+        $(taskColumn).addClass("past");
+    }
+    else if (rowId === currentTime) {
+        $(taskColumn).addClass("present");
+    }
+    else {
+        $(taskColumn).addClass("future");
+    }
+}
 
-// // loop through hours array to create object-literal container with time designation to left
-// for (let index = 0; index < hours.length; index++) {
-//     container.append(` 
-//     <div class="row">
-//             <div class="col-sm-1 hour">${hours[index]}</div>
-//             <div class="col-sm-10"><textarea class="form-control h-100" id="textarea"></textarea></div>
-//             <div class="col-sm-1"><button class="saveBtn h-100 w-100" id="saveBtn"><i class="far fa-save"></i></button></div>
-//         </div> 
-//     `);
+
+    // var hours = ["9 am", "10 am", "11 am", "12 pm", "1 pm", "2 pm", "3 pm", "4 pm", "5 pm"];
+
+    // // loop through hours array to create object-literal container with time designation to left
+    // for (let index = 0; index < hours.length; index++) {
+    //     container.append(` 
+    //     <div class="row">
+    //             <div class="col-sm-1 hour">${hours[index]}</div>
+    //             <div class="col-sm-10"><textarea class="form-control h-100" id="textarea"></textarea></div>
+    //             <div class="col-sm-1"><button class="saveBtn h-100 w-100" id="saveBtn"><i class="far fa-save"></i></button></div>
+    //         </div> 
+    //     `);
 
     // OR
     // make a div with a class that concetenates row + [i]
     // then insert object literal with the three columns as notated above
-// }
+    // }
 
-var militaryHours = ["9", 10, 11, 12, 13, 14, "15", "16", "17"];
-var timeNow = moment();
-// console.log(timeNow);
-for (index = 0; index < militaryHours.length; index++) {
-    if (timeNow > parseInt(militaryHours)) {
-        $("textarea").addClass("past");
-    }
-    else if (timeNow === parseInt(militaryHours)) {
-        $("textarea").addClass("present");
-    }
-    else {
-        $("textarea").addClass("future");
-    }
-}
+//     var militaryHours = ["9", 10, 11, 12, 13, 14, "15", "16", "17"];
+// var timeNow = moment();
+// // console.log(timeNow);
+// for (index = 0; index < militaryHours.length; index++) {
+//     if (timeNow > parseInt(militaryHours)) {
+//         $("textarea").addClass("past");
+//     }
+//     else if (timeNow === parseInt(militaryHours)) {
+//         $("textarea").addClass("present");
+//     }
+//     else {
+//         $("textarea").addClass("future");
+//     }
+// }
 
 // get text from input in textarea
 $(".container").on("click", "textarea", function () {
