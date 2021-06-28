@@ -84,21 +84,21 @@ for (i = 9; i < 18; i++) {
 
     // compare the row id number with the current time and set the corresponding color (defined in stylesheet)
     // take out classes that have become incorrect (if they're there)
-    // fixed 'lack of .id' bug
+    // fixed 'lack of .id' bug for rowId
     if (parseInt(rowId.id) < currentTime) {
-        $(taskColumn.id).addClass("past");
-        $(taskColumn.id).removeClass("present");
-        $(taskColumn.id).removeClass("future");
+        $("#taskColumn").addClass("past");
+        $("#taskColumn").removeClass("present");
+        $("#taskColumn").removeClass("future");
     }
     else if (parseInt(rowId.id) === currentTime) {
-        $(taskColumn.id).addClass("present");
-        $(taskColumn.id).removeClass("past");
-        $(taskColumn.id).removeClass("future");
+        $("#taskColumn").addClass("present");
+        $("#taskColumn").removeClass("past");
+        $("#taskColumn").removeClass("future");
     }
     else {
-        $(taskColumn.id).addClass("future");
-        $(taskColumn.id).removeClass("past");
-        $(taskColumn.id).removeClass("present");
+        $("#taskColumn").addClass("future");
+        $("#taskColumn").removeClass("past");
+        $("#taskColumn").removeClass("present");
     }
 }
 
