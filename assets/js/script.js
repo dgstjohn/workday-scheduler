@@ -26,7 +26,7 @@ for (i = 9; i < 18; i++) {
     // div for text input area for tasks
     var taskColumn = document.createElement("div");
     $(taskColumn).attr("class", "col-sm-10");
-    $(taskColumn).attr("id", "taskColumn")
+    $(taskColumn).attr("id", i)
     console.log(taskColumn);
 
     // add textarea element inside taskColumn
@@ -85,20 +85,20 @@ for (i = 9; i < 18; i++) {
     // compare the row id number with the current time and set the corresponding color (defined in stylesheet)
     // take out classes that have become incorrect (if they're there)
     // fixed 'lack of .id' bug
-    if (rowId.id < currentTime) {
-        $("#taskColumn").addClass("past");
-        $("#taskColumn").removeClass("present");
-        $("#taskColumn").removeClass("future");
+    if (parseInt(rowId.id) < currentTime) {
+        $(taskColumn.id).addClass("past");
+        $(taskColumn.id).removeClass("present");
+        $(taskColumn.id).removeClass("future");
     }
-    else if (rowId.id === currentTime) {
-        $("#taskColumn").addClass("present");
-        $("#taskColumn").removeClass("past");
-        $("#taskColumn").removeClass("future");
+    else if (parseInt(rowId.id) === currentTime) {
+        $(taskColumn.id).addClass("present");
+        $(taskColumn.id).removeClass("past");
+        $(taskColumn.id).removeClass("future");
     }
     else {
-        $("#taskColumn").addClass("future");
-        $("#taskColumn").removeClass("past");
-        $("#taskColumn").removeClass("present");
+        $(taskColumn.id).addClass("future");
+        $(taskColumn.id).removeClass("past");
+        $(taskColumn.id).removeClass("present");
     }
 }
 
