@@ -56,7 +56,7 @@ for (i = 9; i < 18; i++) {
     $(rowDiv).append(taskColumn);
     $(rowDiv).append(saveColumn);
 
-    // variable to set text for time display
+    // variable to set text for time display for am
     if (i < 13) {
         var timeDisplay = i + " am";
     }
@@ -99,6 +99,54 @@ for (i = 9; i < 18; i++) {
         $(taskColumn).removeClass("present");
     }
 }
+// localStorage set/get logic
+// Declares a 'list' variable that holds the parsed task items retrieved from 'localStorage'
+// If there is nothing in 'localStorage', set the 'list' to an empty array
+var list = JSON.parse(localStorage.getItem('taskList')) || [];
+
+// first, call function to display retrieved items
+function render(list) {
+    // Empties out the html
+    $('#textarea').empty();
+
+    // Iterates over the 'list'
+    for (var i = 0; i < list.length; i++) {
+        // Sets the `list` item's value as text
+        var task = $('#textarea'); // this becomes $("#textarea")
+        // console.log(task);
+        task.text(list[i]);
+
+        // Adds 'toDoItem' to the To-Do List div
+        $('#textarea').append(task);
+    }
+}
+
+// on blur action outside of textarea, store the input in variable addTask
+$('#textarea').on('blur', function (event) {
+    event.preventDefault();
+
+    // Get the to-do "value" from the textbox and store it as a variable using `.val()` and `.trim()`
+    var addTask = $(this)
+        .val()
+        .trim();
+    console.log(addTask);
+
+    // Add the new to-do to our local 'list' variable
+    list.push(addTask);
+
+    // Update the to-dos on the page
+    render(list);
+
+});
+
+// 
+$("#saveBtn").on("click", "button", function () {
+    localStorage.setItem('taskList', JSON.stringify(list));
+})
+
+// render our to-dos on page load
+render(list);
+
 
 // // first, get any values in localStorage or set variable to empty array
 // // (example from localStorage class activity)
@@ -118,7 +166,6 @@ for (i = 9; i < 18; i++) {
 // //     .val();
 // // });
 
-// $(".saveBtn").on("click", "button", function () {
-//     localStorage.setItem("#row.id", taskCapture);
-//     console.log(taskCapture);
-// })
+// Save the to-dos into localStorage
+    // We need to use JSON.stringify to turn the list from an array into a string
+
