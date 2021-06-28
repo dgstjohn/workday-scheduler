@@ -41,6 +41,7 @@ body {
     color: #000000;
     border-top: 1px dashed #000000;
     text-align: center;
+    /* added padding-top to move time display item down to match mockup */
     padding-top: 25px;  
   }
   
@@ -75,4 +76,8 @@ body {
   .col-sm-1, .col-sm-10 {
     padding-left: 0;
     padding-right: 0;
+  }
+
+  .form-control {
+    background: transparent;
   }

@@ -26,6 +26,8 @@ for (i = 9; i < 18; i++) {
     // div for text input area for tasks
     var taskColumn = document.createElement("div");
     $(taskColumn).attr("class", "col-sm-10");
+    $(taskColumn).attr("id", "taskColumn")
+    console.log(taskColumn);
 
     // add textarea element inside taskColumn
     var taskColTextarea = document.createElement("textarea");
@@ -69,36 +71,37 @@ for (i = 9; i < 18; i++) {
 }
 
 // do for loop to check the rows and assign a color class
-// once again, index is 9 to 18
+// once again, index is 9 to 18 to set up rowId properly
 for (i = 9; i < 18; i++) {
     // set variable to get Moment time for color assignment to task row
     // using Moment hour method from https://momentjs.com/docs/#/get-set/hour/
     var currentTime = moment().hour();
-    // console.log(currentTime);
+    console.log(currentTime);
 
     // grab the row id number into a variable
     var rowId = document.getElementById(i);
-    // console.log(rowId.id);
+    console.log(rowId.id);
 
     // compare the row id number with the current time and set the corresponding color (defined in stylesheet)
     // take out classes that have become incorrect (if they're there)
     // fixed 'lack of .id' bug
     if (rowId.id < currentTime) {
-        $(taskColumn).addClass("past");
-        $(taskColumn).removeClass("present");
-        $(taskColumn).removeClass("future");
+        $("#taskColumn").addClass("past");
+        $("#taskColumn").removeClass("present");
+        $("#taskColumn").removeClass("future");
     }
     else if (rowId.id === currentTime) {
-        $(taskColumn).addClass("present");
-        $(taskColumn).removeClass("past");
-        $(taskColumn).removeClass("future");
+        $("#taskColumn").addClass("present");
+        $("#taskColumn").removeClass("past");
+        $("#taskColumn").removeClass("future");
     }
     else {
-        $(taskColumn).addClass("future");
-        $(taskColumn).removeClass("past");
-        $(taskColumn).removeClass("present");
+        $("#taskColumn").addClass("future");
+        $("#taskColumn").removeClass("past");
+        $("#taskColumn").removeClass("present");
     }
 }
+
 // localStorage set/get logic
 // Declares a 'list' variable that holds the parsed task items retrieved from 'localStorage'
 // If there is nothing in 'localStorage', set the 'list' to an empty array
@@ -144,28 +147,7 @@ $("#saveBtn").on("click", "button", function () {
     localStorage.setItem('taskList', JSON.stringify(list));
 })
 
+// setColors();
+
 // render our to-dos on page load
 render(list);
-
-
-// // first, get any values in localStorage or set variable to empty array
-// // (example from localStorage class activity)
-//     var list = JSON.parse(localStorage.getItem('XXXXX')) || [];
-
-// // get text from input in textarea
-// $("#row").on("blur", "textarea", function (event) {
-//     event.preventDefault
-//     console.log(this);
-//     var task = $(this)
-//         .val()
-//         .trim();
-// });
-
-// // $(".container").on("blur", "textarea", function () {
-// //     var taskCapture= $(this)
-// //     .val();
-// // });
-
-// Save the to-dos into localStorage
-    // We need to use JSON.stringify to turn the list from an array into a string
-
